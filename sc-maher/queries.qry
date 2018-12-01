@@ -1,0 +1,52 @@
+/* Query all orders in the network
+*/
+
+query Orders {
+  description: "Select all orders"
+  statement: 
+     SELECT org.example.phoenicia.Order
+}
+
+/* Query orders by Buyer in the network
+* List all orders for a certain Buyer
+*/
+
+query OrderByBuyer { 
+  description: "Select all orders based on their Buyer"
+  statement: 
+    SELECT org.example.phoenicia.Order
+      WHERE (buyer == _$buyer)   
+}
+
+/* Query orders by Seller in the network
+* List all orders for a certain Seller
+*/
+
+query OrderBySeller { 
+  description: "Select all orders based on their Seller"
+  statement: 
+    SELECT org.example.phoenicia.Order
+      WHERE (seller == _$seller)   
+}
+
+/* Query orders by Amount in the network
+* List all orders for a certain Amount
+*/
+
+query OrderByQuantity { 
+  description: "Select all orders based on certain amount"
+  statement: 
+    SELECT org.example.phoenicia.Order
+      WHERE (quantity > 20)   
+}
+
+/* Query orders by Product Type in the network
+* List all orders for a certain Product
+*/
+
+query OrderByProduct { 
+  description: "Select all orders based on their product type"
+  statement: 
+    SELECT org.example.phoenicia.Order
+      WHERE (product == _$product)   
+}

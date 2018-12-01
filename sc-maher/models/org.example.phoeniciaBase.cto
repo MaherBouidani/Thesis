@@ -1,0 +1,9 @@
+
+
+// main memeber in Phoenicia network
+
+namespace composer.base
+
+abstract participant Member {
+  o String ContactInformation
+}

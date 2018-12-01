@@ -1,0 +1,171 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Maher Bouidani 2018 
+ */
+
+namespace org.example.phoenicia
+
+import composer.base.*
+
+// participants
+participant Buyer identified by buyerID extends Member{
+    o String buyerID
+}
+participant Seller identified by sellerID extends Member{
+    o String sellerID
+}
+participant Shipper identified by shipperID extends Member {
+    o String shipperID
+}
+participant Vendor identified by vendorID extends Member {
+    o String vendorID
+}
+participant Bank identified by bankID extends Member {
+    o String bankID
+}
+
+// assets 
+asset Order identified by orderID {
+    o String orderID
+    o String[] product
+    o String status
+    o String OrderRefundedDate
+    o String RefundRequestDate
+    o Integer quantity
+    o String OrderCreatedDate 
+    o String OrderBuyDate 
+    o String OrderCancelDate
+    o String OrderVendorDate
+    o String returnOrderDate
+    o String returnOrderToVendorDate
+    o String requestShipmentDate
+    o String deliveredDate
+    o String deliveringDate
+    o String paymentRequestDate
+    o String payDate
+    o String ReasonForCancelling
+    o Integer refundAmount
+    o String reasonForReturning
+    o Integer totalBalanceDue
+    --> Vendor vendor
+    --> Shipper shipper
+    --> Buyer buyer
+    --> Seller seller 
+    --> Bank bank 
+
+}
+// transactions 
+  transaction CreateOrder {
+    o Integer quantity
+    o String[] product
+    --> Order order
+    --> Buyer buyer
+}
+  transaction CancelOrder {
+    o String ReasonForCancelling
+    --> Order order
+    --> Buyer buyer
+    --> Seller seller
+}
+  transaction Buy {
+    --> Order order
+    --> Buyer buyer
+    --> Seller seller
+}
+  transaction OrderFromVendor {
+    --> Order order
+    --> Vendor vendor
+    --> Seller seller
+}
+  transaction RequestShipping {
+    --> Order order
+    --> Shipper shipper
+    --> Vendor vendor
+}
+  transaction Deliver {
+    --> Order order
+    --> Shipper shipper
+    --> Buyer buyer 
+}
+  transaction InDelivering {
+    --> Order order
+    --> Shipper shipper
+}
+  transaction ReturnOrder {
+    o String reasonForReturning
+    --> Order order
+    --> Seller seller
+    --> Buyer buyer 
+}
+transaction ReturnOrderVendor {
+  --> Order order
+  --> Seller seller 
+  --> Vendor vendor 
+}
+  transaction PaymentReq{
+    o Integer totalBalanceDue
+    --> Order order
+    --> Bank bank
+}
+  transaction Pay {
+    --> Order order
+    --> Seller seller
+    --> Bank bank
+} 
+  transaction RefundRequest {
+    --> Order order 
+    --> Seller seller
+    --> Bank bank  
+  }
+  transaction Refund {
+    o Integer refundAmount
+    --> Order order
+    --> Seller seller
+    --> Bank bank
+}
+// Events 
+event BuyNotification{
+  --> Order order 
+  --> Seller seller
+}
+event CancelNotification{
+  --> Order order
+  --> Buyer buyer
+}
+event VendorNotification {
+  --> Order order
+  --> Vendor vendor
+}
+event OnRouteNotification {
+  --> Order order 
+  --> Buyer buyer
+}
+event DeliveredNotification {
+  --> Order order
+  --> Buyer buyer  
+}
+event PaymentNotification { 
+  --> Order order
+  --> Seller seller 
+}
+event RefundNotification {
+  --> Order order
+  --> Bank bank
+}
+event ReturnNotification {
+  --> Order order 
+  --> Seller seller
+}

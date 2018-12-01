@@ -1,0 +1,118 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ *
+ */
+rule EverybodyCanReadEverything {
+    description: "Allow all participants read access to all resources"
+    participant: "org.example.phoenicia.*"
+    operation: READ
+    resource: "org.example.phoenicia.*"
+    action: ALLOW
+}
+
+rule EverybodyCanSubmitTransactions {
+    description: "Allow all participants to submit transactions"
+    participant: "org.example.phoenicia.*"
+    operation: CREATE
+    resource: "org.example.phoenicia.*"
+    action: ALLOW
+}
+
+// rule BuyerIdentityAcessRight {
+//   description: "Access Right for Buyers in in their desginated transaction"
+//   participant(m): "org.example.phoenicia.Buyer"
+//   operation: CREATE, UPDATE, READ
+//   resource(r): "org.example.phoenicia.Order"
+//   transaction(tx): "org.example.phoenicia.CreateOrder"
+//   condition: (r.buyer.getIdentifier() == m.getIdentifier())
+//   action: ALLOW
+// }
+// rule SellerCanReadBuyOrder {
+//   description: "Seller can only perform reading operation on the order from Buyer"
+//   participant(m): "org.example.phoenicia.Seller"
+//   operation: READ
+//   resource(r): "org.example.phoenicia.Order"
+//   condition: (r.seller.getIdentifier() == m.getIdentifier())
+//   action: ALLOW
+// }
+// rule SellerIdentityAccessRight {
+//   description: "Access Right for Sellers in their desginated transaction"
+//   participant(m): "org.example.phoenicia.Seller"
+//   operation: CREATE, UPDATE, READ
+//   resource(r): "org.example.phoenicia.Order"
+//   transaction(tx): "org.example.phoenicia.OrderVendor"
+//   condition: (r.seller.getIdentifier() == m.getIdentifier())
+//   action: ALLOW
+// }
+// rule BankCanReadPaymentRequest {
+//   description: "Banks can only perform reading operation on the order from Seller"
+//   participant(m): "org.example.phoenicia.Bank"
+//   operation: READ
+//   resource(r): "org.example.phoenicia.Order"
+//   condition: (r.bank.getIdentifier() == m.getIdentifier())
+//   action: ALLOW
+// }
+// rule BankCanSubmitPayTransaction {
+//   description: "Access Right for Banks to perform operations on their pay transaction"
+//   participant(m): "org.example.phoenicia.Bank"
+//   operation: CREATE, UPDATE, READ
+//   resource(r): "org.example.phoenicia.Order"
+//   transaction(tx): "org.example.phoenicia.Pay"
+//   condition: (r.bank.getIdentifier() == m.getIdentifier())
+//   action: ALLOW
+// }
+// rule BankCanSubmitRefundRequest {
+//   description: "Access Right for Banks to perform operations on their RefundRequest transaction"
+//   participant(m): "org.example.phoenicia.Bank"
+//   operation: CREATE, UPDATE, READ
+//   resource(r): "org.example.phoenicia.Order"
+//   transaction(tx): "org.example.phoenicia.RefundRequest"
+//   condition: (r.bank.getIdentifier() == m.getIdentifier())
+//   action: ALLOW
+// }
+// rule VendorCanSubmitShipOrder {
+//   description: "Access Right for Vendors to perform operations on their ShipOrder transaction"
+//   participant(m): "org.example.phoenicia.Bank"
+//   operation: CREATE, UPDATE, READ
+//   resource(r): "org.example.phoenicia.Order"
+//   transaction(tx): "org.example.phoenicia.RefundRequest"
+//   condition: (r.bank.getIdentifier() == m.getIdentifier())
+//   action: ALLOW
+// }
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
