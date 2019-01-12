@@ -18,8 +18,9 @@
 
 namespace org.example.phoenicia
 
-import composer.base.*
-
+abstract participant Member {
+  o String ContactInformation
+}
 // participants
 participant Buyer identified by buyerID extends Member{
     o String buyerID

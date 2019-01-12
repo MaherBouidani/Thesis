@@ -59,6 +59,7 @@ function Buy(tx) {
         tx.order.status = JSON.stringify(StatusList.OrderBuyStatus);
         const buy = getFactory().newEvent('org.example.phoenicia', 'BuyNotification');
         buy.order = tx.order;
+        buy.seller = tx.order.seller;
         emit(buy);
         return getAssetRegistry('org.example.phoenicia.Order')
             .then(function (assetRegistry) {
@@ -98,7 +99,7 @@ function CancelOrder(tx) {
 function OrderFromVendor(tx) {
     if (tx.order.status == JSON.stringify(StatusList.OrderBuyStatus))
     {
-        tx.order.vednor = tx.vednor;
+        tx.order.vendor = tx.vendor;
         tx.order.OrderVendorDate = new Date().toISOString();
         tx.order.status = JSON.stringify(StatusList.OrderFromVendorStatus);
         const vendorNotify = getFactory().newEvent('org.example.phoenicia', 'VendorNotification');
@@ -119,7 +120,7 @@ function OrderFromVendor(tx) {
  * @transaction
  */
 function RequestShipping(tx) {
-    if (tx.order.status == JSON.stringify(StatusList.OrderVendorStatus))
+    if (tx.order.status == JSON.stringify(StatusList.OrderFromVendorStatus))
     {
         tx.order.shipper = tx.shipper;
         tx.order.requestShipmentDate = new Date().toISOString();

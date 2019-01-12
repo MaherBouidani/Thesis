@@ -36,10 +36,10 @@ description "Packaging sc-maher.bna in ./dist and sc-maher@0.0.1.bna "
 
 showStep "Deploying a business network to the Hyperledger Fabric requires the Hyperledger Composer business network to be installed on the peer:"
 
-composer network install --card PeerAdmin@hlfv1 --archiveFile sc-maher@0.0.1.bna
+composer network install --card PeerAdmin@hlfv1 --archiveFile uvic-maher@0.1.3.bna
 
 showStep "Start the Hyperledger Fabric Network"
-composer network start --networkName sc-maher --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+composer network start --networkName uvic-maher --networkVersion 0.1.2 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
 
 description "networkadmin.card created "
 

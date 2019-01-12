@@ -2,8 +2,8 @@
   "engines": {
     "composer": "^0.19.15"
   },
-  "name": "sc-maher",
-  "version": "0.0.1",
+  "name": "uvic-maher",
+  "version": "0.1.5",
   "description": "master of applied science thesis",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/sc-maher.bna",

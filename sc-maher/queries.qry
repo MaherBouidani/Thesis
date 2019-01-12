@@ -29,7 +29,7 @@ query OrderBySeller {
       WHERE (seller == _$seller)   
 }
 
-/* Query orders by Amount in the network
+/* Query orders by Quantity in the network
 * List all orders for a certain Amount
 */
 
